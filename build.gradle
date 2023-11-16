@@ -1,0 +1,21 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    implementation("net.dv8tion:JDA:5.0.0-beta.17")
+    implementation("mysql:mysql-connector-java:8.0.33")
+    //implementation ("ch.qos.logback:logback-classic:1.4.8")
+}
+
+test {
+    useJUnitPlatform()
+}

@@ -28,36 +28,38 @@ public class Main extends ListenerAdapter {
     public void onMessageReceived(MessageReceivedEvent event) {
         User user = event.getAuthor();
         String command = event.getMessage().getContentRaw(); // Get the user input
-        boolean checkNewUser;
+        boolean isNewUser;
 
         if (user.isBot()) {
             return;
         } else {
-            checkNewUser = checkExistingUser(user); // Check if the user is registered
+            isNewUser = checkExistingUser(user); // Check if the user is registered
         }
 
         if (validCommands(command)) { // Valid commands
             System.out.println(CurrentTime.getCurrentTime() + "[USER] " + event.getAuthor().getName() + ": " + event.getMessage().getContentDisplay()); // Only display in console if valid commands are sent
 
+            if (isNewUser && !command.equals(".help")) { // New user section
+                if (command.equals(".create")) { // First creation of a character if the user is not registered and enters .create as the first command
+                    createFirstCharacter(event, user);
+                } else { // If the user is not registered and tries to enter a command other than .create or .help
+                    event.getChannel().sendMessage("You are not registered, type .create to get started").queue();
+                }
+            }
+
             if (command.equals(".help")) { // Accessible by anyone
                 displayHelpMenu(event, user);
             }
 
-            if (command.equals(".create") && checkNewUser) { // First creation of a character if the user is not registered
-                createFirstCharacter(event, user);
-            }
-
-            if (!checkNewUser) { // Conditional commands
+            if (!isNewUser) { // Commands are accessible only if the user exists in the DB
                 switch (command) {
-                    case ".create":
+                    case ".create": // If the existing user tries to create a new character
                         displayErrorExistingChar(event, user);
                         break;
                     case ".info":
                         displayCharInfo(event, user);
                         break;
                 }
-            } else if (!command.equals(".create")) { // If you enter a valid command except for .create as a new user
-                event.getChannel().sendMessage("You are not registered, type .create to get started").queue();
             }
         }
     }
@@ -177,6 +179,7 @@ public class Main extends ListenerAdapter {
 
     public boolean validCommands(String command) {
         boolean valid = false;
+
         if (command.equals(".create")) {
             valid = true;
         } else if (command.equals(".info")) {

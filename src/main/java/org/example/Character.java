@@ -9,6 +9,7 @@ public class Character {
     protected int intel;
     protected int wis;
     protected int chari;
+    protected int gold;
     protected Class job;
     protected Storage storage;
     protected Equipment equipment;

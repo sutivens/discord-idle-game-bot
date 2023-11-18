@@ -5,8 +5,8 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class CurrentTime {
-     protected static String date;
-     protected static String time;
+     private static String date;
+     private static String time;
 
     public static String getCurrentTime() {
         date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));

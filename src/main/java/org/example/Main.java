@@ -259,7 +259,7 @@ public class Main extends ListenerAdapter {
             embedCharInfo.addField("Charisma", resultSet.getString("charisma"), true);
 
 
-            embedCharInfo.setFooter("You currently have : " + statPoint + " stat points available\nIf you wish to allocate those points, use one of the following commands followed by the number (ex: .str 3 ) : .str .con .dex .int .wis .cha");
+            embedCharInfo.setFooter("You currently have : " + statPoint + " stat points available\nIf you wish to allocate those points, use one of the following commands followed by the amount (ex: .str 3 ) : .str .con .dex .int .wis .cha");
 
             event.getChannel().sendMessageEmbeds(embedCharInfo.build()).queue();
         } catch (SQLException e) {
